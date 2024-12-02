@@ -4,7 +4,7 @@ def main():
     contact = ContactManager()
     
     while True:
-        print("Welcome to contact book manager")
+        print("\n----Contact Book Management System----")
         print("1. Add contact")
         print("2. View contact")
         print("3. Remove contact")
