@@ -1,8 +1,20 @@
 from validation import check_valid_name, check_number, check_email
-
+import json
 class ContactManager():
     
+    
     contacts = []
+    def __init__(self, *args, **kwargs):
+        with open('Contacts.txt', 'r') as file:
+            for line in file:
+                fields = line.strip().split(", ")
+                print(fields)
+                contact = {}
+                for field in fields:
+                    key, value = field.split(": ", 1)  # Split by ': ' to separate key and value
+                    contact[key.lower()] = value  # Use lowercase keys for consistency
+                self.contacts.append(contact)
+    
     
     def add_contact(self):
         name = input("Please Enter name: ").strip()
@@ -33,7 +45,12 @@ class ContactManager():
 
         new_contact = {'name':name, 'email':email, 'phone':phone, 'address':address}
         self.contacts.append(new_contact)
-        
+        with open('Contacts.txt', 'w') as file:  # Use 'w' mode for writing
+            for contact in self.contacts:
+                # Convert each contact (a dictionary) to a string
+                contact_str = f"Name: {contact['name']}, Email: {contact['email']}, Phone: {contact['phone']}, Address: {contact['address']}\n"
+                file.write(contact_str)
+                
         print("New Contact successfully added to the contact book!")
         
     
@@ -61,6 +78,11 @@ class ContactManager():
         for index, contact in enumerate(self.contacts):
             if query.lower() in str(contact).lower():
                 self.contacts.pop(index)
+                with open('Contacts.txt', 'w') as file:  # Use 'w' mode for writing
+                    for contact in self.contacts:
+                        # Convert each contact (a dictionary) to a string
+                        contact_str = f"Name: {contact['name']}, Email: {contact['email']}, Phone: {contact['phone']}, Address: {contact['address']}\n"
+                        file.write(contact_str)
                 print("Contact Successfully removed!")
                 return index
             print("No contact found!")
