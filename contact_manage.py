@@ -8,7 +8,6 @@ class ContactManager():
         with open('Contacts.txt', 'r') as file:
             for line in file:
                 fields = line.strip().split(", ")
-                print(fields)
                 contact = {}
                 for field in fields:
                     key, value = field.split(": ", 1)  # Split by ': ' to separate key and value
@@ -48,7 +47,7 @@ class ContactManager():
         with open('Contacts.txt', 'w') as file:  # Use 'w' mode for writing
             for contact in self.contacts:
                 # Convert each contact (a dictionary) to a string
-                contact_str = f"Name: {contact['name']}, Email: {contact['email']}, Phone: {contact['phone']}, Address: {contact['address']}\n"
+                contact_str = f"name: {contact['name']}, email: {contact['email']}, phone: {contact['phone']}, address: {contact['address']}\n"
                 file.write(contact_str)
                 
         print("New Contact successfully added to the contact book!")
@@ -64,17 +63,16 @@ class ContactManager():
             
             
     def search_contact(self):
-        query = input("Enter name, email, or phone to search: ").strip()
+        query = input("Please Enter name for search contact: ").strip()
         for contact in self.contacts:
-            result = query.lower() in str(contact).lower()
-            if result:
+            if query.lower() == (contact['name']).lower():
                 print(f"Name: {contact['name']}, Email: {contact['email']}, Phone: {contact['phone']}, Address: {contact['address']}")
-            else:
-                print("No contact number found...")
-                break
+                
+                
+            
 
     def delete_contact(self):
-        query = input("Enter name, email, or phone to search: ").strip()
+        query = input("Enter name for delete contact..: ").strip()
         for index, contact in enumerate(self.contacts):
             if query.lower() in str(contact).lower():
                 self.contacts.pop(index)
